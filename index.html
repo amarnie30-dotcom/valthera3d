@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valthera3D — Figuras personalizadas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Instrument+Serif&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0b0c0f;--card:#171a21;--line:rgba(255,255,255,.08);--text:#f4f1ea;--muted:#9a958b;--amber:#e8a54b;--cyan:#5ad4d4}
+    *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+    body{font-family:Outfit,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+    img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{font-family:inherit;cursor:pointer}
+    .wrap{width:min(1180px,calc(100% - 40px));margin-inline:auto}
+    header{position:sticky;top:0;z-index:40;backdrop-filter:blur(18px);background:rgba(11,12,15,.72);border-bottom:1px solid var(--line)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700}
+    .mark{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(145deg,#f0c27a,#c9842a);color:#1a1206;font-weight:800}
+    .btn{border:0;border-radius:999px;padding:11px 18px;font-weight:600;font-size:14px}
+    .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+    .btn-primary{background:var(--amber);color:#1a1206}
+    .hero{padding:72px 0 40px}.kicker{color:var(--amber);letter-spacing:.22em;text-transform:uppercase;font-size:12px;font-weight:600;margin-bottom:16px}
+    h1{font-family:"Instrument Serif",serif;font-size:clamp(40px,8vw,78px);line-height:.95;font-weight:400;margin-bottom:16px}
+    .hero p{color:#d7d2c7;font-size:18px;max-width:540px;margin-bottom:24px}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap}section{padding:72px 0}
+    h2{font-family:"Instrument Serif",serif;font-size:clamp(28px,5vw,48px);font-weight:400;margin-bottom:10px}
+    .sec-head p{color:var(--muted);margin-bottom:28px}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+    .chip{border:1px solid var(--line);background:#12141a;color:var(--muted);padding:8px 14px;border-radius:999px;font-size:13px}
+    .chip.active,.chip:hover{color:#1a1206;background:var(--amber);border-color:var(--amber)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
+    .card .media{aspect-ratio:4/5;background:#0e1014}.card .media img{width:100%;height:100%;object-fit:cover}
+    .card .body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+    .tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+    .card p{color:var(--muted);font-size:14px;flex:1}.price-row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .price{font-size:18px;font-weight:700}.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+    .step{padding:18px;border:1px solid var(--line);border-radius:18px}.num{color:var(--amber);font-size:12px;font-weight:700;margin-bottom:8px}
+    .step p{color:var(--muted);font-size:14px}footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--muted)}
+    .drawer-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;z-index:50}.drawer-bg.open{opacity:1;pointer-events:auto}
+    .drawer{position:fixed;top:0;right:0;height:100%;width:min(420px,100%);background:#12151c;transform:translateX(100%);transition:.3s;z-index:60;display:flex;flex-direction:column}
+    .drawer.open{transform:none}.drawer header{padding:16px 18px;display:flex;justify-content:space-between;align-items:center}
+    .cart-items{padding:8px 18px;overflow:auto;flex:1}.cart-item{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;margin-bottom:12px}
+    .cart-item img{width:56px;height:56px;object-fit:cover;border-radius:10px}.cart-foot{padding:16px 18px;border-top:1px solid var(--line)}
+    .total{display:flex;justify-content:space-between;margin-bottom:12px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1c2118;color:#6ee7b7;padding:12px 16px;border-radius:999px;opacity:0;z-index:80}.toast.show{opacity:1}
+    form, .panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;margin-top:16px}
+    label{display:block;font-size:13px;color:var(--muted);margin:12px 0 6px}
+    input,select,textarea{width:100%;background:#0e1116;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:12px;font:inherit}
+    textarea{min-height:90px}
+  </style>
+</head>
+<body>
+<header><div class="wrap nav"><a class="brand" href="#inicio"><span class="mark">V</span>Valthera3D</a>
+<div><a class="btn btn-ghost" href="https://instagram.com/valthera3d" target="_blank" rel="noopener">Instagram</a>
+<button class="btn btn-primary" id="openCart">Carrito <span id="cartCount">0</span></button></div></div></header>
+<section class="hero" id="inicio"><div class="wrap">
+<div class="kicker">Valthera3D · Figuras personalizadas</div>
+<h1>Tu figura. Hecha a tu medida.</h1>
+<p>Figuras estilo coleccionable a partir de tus fotos. Una pieza 15 €. Composiciones de 2 o más, desde 30 €.</p>
+<div class="hero-cta"><a class="btn btn-primary" href="#tienda">Ver trabajos</a><a class="btn btn-ghost" href="#encargos">Encargar la mía</a></div>
+</div></section>
+<section id="tienda"><div class="wrap"><div class="sec-head"><h2>Trabajos reales</h2><p>Así quedan las figuras. Encarga la tuya con las mismas tarifas.</p></div>
+<div class="filters" id="filters"></div><div class="grid" id="products"></div></div></section>
+<section id="proceso"><div class="wrap"><h2>Cómo trabajamos</h2>
+<div class="steps" style="margin-top:20px">
+<article class="step"><div class="num">01</div><h3>Envías fotos</h3><p>Cara de frente y la ropa que quieres.</p></article>
+<article class="step"><div class="num">02</div><h3>Precio</h3><p>1 figura 15 €. Grupos desde 30 €.</p></article>
+<article class="step"><div class="num">03</div><h3>Imprimimos</h3><p>Figura coleccionable con peana.</p></article>
+<article class="step"><div class="num">04</div><h3>Entrega</h3><p>Envío o recogida. Pedidos por Instagram.</p></article>
+</div></div></section>
+<section id="encargos"><div class="wrap"><h2>Encarga la tuya</h2>
+<form id="customForm" class="panel">
+<label>Nombre</label><input required name="nombre" />
+<label>Email</label><input required type="email" name="email" />
+<label>Tipo</label><select name="tipo"><option>1 figura — 15 €</option><option>Composición 2 o más — desde 30 €</option></select>
+<label>Descripción</label><textarea required name="descripcion" placeholder="Quién sale, ropa, peana..."></textarea>
+<button class="btn btn-primary" style="margin-top:16px;width:100%" type="submit">Enviar consulta</button>
+</form></div></section>
+<footer><div class="wrap">Valthera3D · <a href="https://instagram.com/valthera3d">@valthera3d</a></div></footer>
+<div class="drawer-bg" id="drawerBg"></div>
+<aside class="drawer" id="drawer"><header><strong>Tu pedido</strong><button class="btn btn-ghost" id="closeCart">Cerrar</button></header>
+<div class="cart-items" id="cartItems"></div>
+<div class="cart-foot"><div class="total"><span>Total</span><strong id="cartTotal">0 €</strong></div>
+<button class="btn btn-primary" style="width:100%" id="checkout">Pedir por WhatsApp</button></div></aside>
+<div class="toast" id="toast"></div>
+<script>
+const PRODUCTS=[
+{id:"individual",name:"Figura personalizada",cat:"Individual",price:15,img:"img/plata.jpg",desc:"1 muñeco a partir de tus fotos. 15 €."},
+{id:"gym",name:"Figura gym",cat:"Individual",price:15,img:"img/gym.jpg",desc:"Con pesas y ropa deportiva."},
+{id:"street",name:"Figura street",cat:"Individual",price:15,img:"img/street.jpg",desc:"Look diario personalizado."},
+{id:"boxeo",name:"Figura boxeo",cat:"Individual",price:15,img:"img/boxeo.jpg",desc:"Guantes y pose de combate."},
+{id:"mma",name:"Figura MMA",cat:"Individual",price:15,img:"img/mma.jpg",desc:"Peleador o peleadora."},
+{id:"lucha",name:"Figura luchadora",cat:"Individual",price:15,img:"img/lucha.jpg",desc:"Ropa de ring y pose de victoria."},
+{id:"pareja",name:"Pareja personalizada",cat:"Composiciones",price:30,from:true,img:"img/vegas.jpg",desc:"2 figuras juntas. Desde 30 €."},
+{id:"familia",name:"Familia + mascota",cat:"Composiciones",price:30,from:true,img:"img/familia.jpg",desc:"Grupo con peana y cartel."},
+{id:"futbol",name:"Escena fútbol",cat:"Composiciones",price:30,from:true,img:"img/futbol.jpg",desc:"Equipación, césped y nombre."},
+{id:"moto",name:"Figura + moto",cat:"Composiciones",price:30,from:true,img:"img/moto.jpg",desc:"Personaje con vehículo."},
+{id:"groot",name:"Groot skater",cat:"Personajes",price:15,img:"img/groot.jpg",desc:"Personaje con monopatín."},
+{id:"gorila",name:"Gorila",cat:"Personajes",price:15,img:"img/gorila.jpg",desc:"Escultura en negro mate."},
+{id:"humor",name:"Figura humor",cat:"Personajes",price:15,img:"img/humor.jpg",desc:"Regalos con broma."}
+];
+const state={filter:"Todos",cart:JSON.parse(localStorage.getItem("valthera_cart")||"[]")};
+const $=id=>document.getElementById(id);
+function save(){localStorage.setItem("valthera_cart",JSON.stringify(state.cart))}
+function renderFilters(){const cats=["Todos",...new Set(PRODUCTS.map(p=>p.cat))];$("filters").innerHTML=cats.map(c=>`<button class="chip ${c===state.filter?"active":""}" data-cat="${c}">${c}</button>`).join("")}
+function renderProducts(){const list=PRODUCTS.filter(p=>state.filter==="Todos"||p.cat===state.filter);$("products").innerHTML=list.map(p=>`<article class="card"><div class="media"><img src="${p.img}" alt="${p.name}"></div><div class="body"><div class="tag">${p.cat}</div><h3>${p.name}</h3><p>${p.desc}</p><div class="price-row"><div class="price">${p.from?"desde ":""}${p.price} €</div><button class="btn btn-primary" data-add="${p.id}">Añadir</button></div></div></article>`).join("")}
+function addToCart(id){const item=state.cart.find(i=>i.id===id);if(item)item.qty+=1;else{const p=PRODUCTS.find(x=>x.id===id);state.cart.push({id,qty:1,name:p.name,price:p.price,img:p.img})}save();renderCart();toast(PRODUCTS.find(p=>p.id===id).name+" añadido")}
+function changeQty(id,d){const item=state.cart.find(i=>i.id===id);if(!item)return;item.qty+=d;if(item.qty<=0)state.cart=state.cart.filter(i=>i.id!==id);save();renderCart()}
+function renderCart(){const count=state.cart.reduce((a,b)=>a+b.qty,0);$("cartCount").textContent=count;const total=state.cart.reduce((a,b)=>a+b.qty*b.price,0);$("cartTotal").textContent=total+" €";if(!state.cart.length){$("cartItems").innerHTML='<div style="color:#9a958b;padding:30px 0">Aún no hay piezas.</div>';return}$("cartItems").innerHTML=state.cart.map(i=>`<div class="cart-item"><img src="${i.img}"><div><strong>${i.name}</strong><div><button data-q="${i.id}" data-d="-1">−</button> ${i.qty} <button data-q="${i.id}" data-d="1">+</button></div></div><div>${i.price*i.qty} €</div></div>`).join("")}
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
+function openCart(o){$("drawer").classList.toggle("open",o);$("drawerBg").classList.toggle("open",o)}
+$("filters").onclick=e=>{const cat=e.target.dataset.cat;if(!cat)return;state.filter=cat;renderFilters();renderProducts()};
+$("products").onclick=e=>{if(e.target.dataset.add)addToCart(e.target.dataset.add)};
+$("cartItems").onclick=e=>{if(e.target.dataset.q)changeQty(e.target.dataset.q,Number(e.target.dataset.d))};
+$("openCart").onclick=()=>openCart(true);$("closeCart").onclick=()=>openCart(false);$("drawerBg").onclick=()=>openCart(false);
+$("checkout").onclick=()=>{if(!state.cart.length)return toast("Añade alguna pieza primero");const lines=state.cart.map(i=>`• ${i.qty} × ${i.name} (${i.price}€)`).join("%0A");const total=state.cart.reduce((a,b)=>a+b.qty*b.price,0);window.open("https://wa.me/34600000000?text="+encodeURIComponent("Hola, pedido Valthera3D:\n"+decodeURIComponent(lines)+"\nTotal: "+total+" €"),"_blank")};
+$("customForm").onsubmit=e=>{e.preventDefault();toast("Consulta recibida. Escríbenos por Instagram para adjuntar fotos.");e.target.reset()};
+renderFilters();renderProducts();renderCart();
+</script>
+</body></html>
